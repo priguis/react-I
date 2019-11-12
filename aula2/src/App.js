@@ -1,15 +1,14 @@
 import React from 'react';
-import './App.css';   
+import './App.css';
 
 class Contador extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      contador: 0
+      contador: 0,
+      visibilidade: true
     };
   }
-  
-
   adicionarUm = () => {
     this.setState((prevState) => {
       return {
@@ -19,27 +18,44 @@ class Contador extends React.Component {
   }
 
   menosUm = () => {
-    this.setState((prevState)=> {
+    this.setState((prevState) => {
       return {
-        contador: prevState.contador -1
+        contador: prevState.contador - 1
       }
     })
   }
-apagaTudo = () => {
-  this.setState(() =>{
-    return {
-      contador: 0 
-    }
-  })
-}
+  resetarContador = () => {
+    this.setState(() => {
+      return {
+        contador: 0
+      }
+    })
+  }
+
+
+  alternarVisibilidade = () => {
+    this.setState((prevState) => {
+      console.log(prevState);
+      return {
+        visibilidade: !prevState.visibilidade
+      }
+    })
+  }
 
   render() {
     return (
       <div>
         <p>{this.state.contador}</p>
-        <button className="btnMaisUm" onClick={this.adicionarUm}>+1</button>
-        <button className="btnMenosUm"onClick={this.menosUm}>-1</button>
-        <button className="btnResetar" onClick={this.apagaTudo}>resetar</button>
+        <button onClick={this.alternarVisibilidade}> {this.state.visibilidade === true ? "Fechar Contador" : "Abrir Contador"}
+        </button>
+        
+        {this.state.visibilidade === true ? (
+        <div>
+            <button className="btnMaisUm" onClick={this.adicionarUm}>+1</button>
+            <button className="btnMenosUm" onClick={this.menosUm}>-1</button>
+            <button className="btnResetar" onClick={this.resetarContador}>resetar</button>
+        </div>
+        ) : ''}
       </div>
     );
   }
